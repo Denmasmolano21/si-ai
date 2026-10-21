@@ -1,0 +1,1 @@
+- [Next.js route type generation](nextjs-route-types.md) — run `next typegen` before `tsc` after changing App Router routes; stale validators can reference removed route files.

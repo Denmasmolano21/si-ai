@@ -3,3 +3,6 @@
 
 # No need to store the pnpm store twice.
 .local
+
+# Next.js generated build cache/output.
+**/.next/

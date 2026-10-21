@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "SI AI Hub"
+description = "A modern AI chat dashboard for Sistem Informasi students, with conversation history, configurable model metadata, and a clearly labeled demo mode before OpenRouter is connected."
+version = "1.0.0"
+id = "artifacts/si-ai-hub"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/", "/_next/hmr" ]
+localPort = 24079
+
+[services.development]
+run = "pnpm --filter @workspace/si-ai-hub run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/si-ai-hub", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/si-ai-hub/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24079"
+BASE_PATH = "/"

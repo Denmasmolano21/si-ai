@@ -1,45 +1,30 @@
-# [Project name]
+# SI AI Hub
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Aplikasi chat belajar untuk kelas Sistem Informasi. Tahap awal memakai respons demo; OpenRouter belum dihubungkan.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/si-ai-hub run dev` — jalankan aplikasi Next.js lokal.
+- `npm run build` — typecheck workspace dan build seluruh paket.
+- Mode demo tidak memerlukan environment variable.
+- `OPENROUTER_API_KEY` baru diperlukan saat OpenRouter diaktifkan; gunakan hanya di server dan jangan memakai prefix `NEXT_PUBLIC_`.
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- pnpm workspace, Node.js 20.9+, Next.js App Router, TypeScript, Tailwind CSS 4.
+- Route Handler demo ada di `artifacts/si-ai-hub/app/ai/chat/route.ts`; request AI tidak memakai Express.
+- Katalog model ada di `artifacts/si-ai-hub/src/config/models.ts`; harga tetap `unknown` sampai diverifikasi.
+- Riwayat percakapan disimpan di localStorage; belum ada autentikasi atau database untuk SI AI Hub.
+- API Server dan canvas yang ada di workspace adalah artifact terpisah.
 
-## Where things live
+## Important behavior
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
-
-## Architecture decisions
-
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Endpoint chat memakai `/ai/chat`, bukan `/api/chat`, karena artifact API Server workspace sudah memiliki prefix `/api`.
+- Teks respons dan banner harus tetap menjelaskan bahwa balasan adalah demo sampai OpenRouter benar-benar diaktifkan.
+- Build Next menghasilkan `.next/`, yang sudah diabaikan Git dan Replit.
+- Root build memberi `PORT` dan `BASE_PATH` untuk artifact mockup Vite yang juga dibangun oleh workspace.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
-
-## User preferences
-
-_Populate as you build — explicit user instructions worth remembering across sessions._
-
-## Gotchas
-
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- Dashboard/chat responsif dengan riwayat lokal, pemilih model, kartu metadata harga, dan respons demo.
+- Semua interaksi AI saat ini hanya demonstrasi; tidak ada API key di browser.
